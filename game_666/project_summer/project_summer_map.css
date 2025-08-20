@@ -1,0 +1,105 @@
+* {
+     padding: 0;
+     margin: 0;
+     box-sizing: border-box;
+}
+.map_background{
+      width: 175%;
+      height: 350%;
+     background-image:url(Hell.jpg);
+     background-size:cover;
+     background-position:center ;
+     background-repeat: no-repeat ;
+     border: 2px solid black;
+     position: absolute;
+}
+body{
+     height:10vh;
+     width:10vh;
+}
+.hellblock {
+  position: absolute;
+  width: 150px;
+  height: 25px;
+  background-image: url(hellBlock.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: 5;
+}
+.heavenblock{
+     position: absolute;
+     width: 150px;
+     height: 25px;
+     background-image:url(HeavenBlock.png) ;
+     background-size:cover;
+     background-repeat:no-repeat;
+     z-index: 5;
+}
+.worldblock{
+     position: absolute;
+     width: 150px;
+     height: 25px;
+     background-image: url(WorldBlock.png);
+     background-size: cover;
+     background-repeat: no-repeat;
+     z-index: 5;
+}
+
+ .dragon {
+      position: absolute;
+      width: 87.5px;
+      height: 87.5px;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%) scaleX(1);
+      background-image: url('image_bot/dragon.end\ \(1\).png'); /* שים לב שהתמונה קיימת בתיקייה */
+       background-repeat: no-repeat;
+      background-size: 400px 87.5px; /* 4 פריימים */
+       animation: fly 0.6s steps(4) infinite; 
+    } 
+
+    @keyframes fly {
+      from { background-position: 0 0; }
+      to { background-position: -400px 0; }
+    } 
+
+    /* אויב */ 
+.enemy{
+  width: 65px;
+  height: auto;
+  object-fit: contain;
+  transform: scaleX(1);
+  position: absolute;
+}
+.skeleton{
+      width: 65px;
+  height: auto;
+  object-fit: contain;
+  transform: scaleX(1);
+  position: absolute;
+}
+
+
+
+
+ /* קונטיינר למשחק */
+ .game {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* השחקן */
+ .player {
+  position: absolute;
+  bottom: 0;
+  left: 100px;
+  width: 64px;
+  height: 64px;
+  background: url("spirt_image/spirt_ali.png") no-repeat;
+  background-size: 192px 128px; /* 3x2 פריימים */
+ }  
+
+
+
+

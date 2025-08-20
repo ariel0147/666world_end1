@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <title>חייל במשחק</title>
+  <style>
+    body {
+      margin: 0;
+      background: #222;
+      overflow: hidden;
+    }
+
+    .game {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .player {
+      position: absolute;
+      bottom: 50px;
+      left: 100px;
+      width: 160px;
+      height: 160px;
+      background: url("spirt_image/spirt_kiril.png") no-repeat;
+      background-size: 640px 320px; /* 4 פריימים בשורה × 2 שורות */
+      image-rendering: pixelated;
+    }
+  </style>
+</head>
+<body>
+  <div class="game">
+    <div class="player" id="player"></div>
+  </div>
+
+  <script>
+    const player = document.getElementById("player");
+    let x = 100;
+    let y = 50;
+    const groundY = 50;
+
+    let velocityY = 0;
+    const gravity = 0.3;
+    const jumpStrength = 7;
+    const maxFallSpeed = -10;
+
+    let jumpCount = 0;
+    const maxJumps = 2;
+
+    let speed = 2;
+    let action = "idle";
+    let frame = 0;
+    let frameCounter = 0;
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") action = "walkRight";
+      if (e.key === "ArrowLeft") action = "walkLeft";
+
+      if (e.key === "ArrowUp") {
+        if (jumpCount < maxJumps) {
+          velocityY = jumpStrength;
+          jumpCount++;
+          action = "jump";
+        }
+      }
+
+      if (e.key === " ") action = "action";
+    });
+
+    document.addEventListener("keyup", () => {
+      if (jumpCount === 0) action = "idle";
+    });
+
+    function getFramePosition(action, frame) {
+      let row = 0;
+      let col = 0;
+
+      switch (action) {
+        case "walkRight":
+          row = 0;
+          col = frame % 4;
+          break;
+        case "walkLeft":
+          row = 0;
+          col = frame % 4;
+          break;
+        case "jump":
+          row = 1;
+          col = 0;
+          break;
+        case "action":
+          row = 1;
+          col = 1;
+          break;
+        default:
+          row = 1;
+          col = 2;
+          break;
+      }
+
+      return {
+        x: -col * 160,
+        y: -row * 160
+      };
+    }
+
+    function gameLoop() {
+      // תנועה אופקית
+      if (action === "walkRight") {
+        x += speed;
+        player.style.transform = "scaleX(1)";
+      }
+      if (action === "walkLeft") {
+        x -= speed;
+        player.style.transform = "scaleX(-1)";
+      }
+
+      // גרוויטציה ודאבל קפיצה
+      y += velocityY;
+      velocityY -= gravity;
+
+      if (velocityY < maxFallSpeed) {
+        velocityY = maxFallSpeed;
+      }
+
+      if (y <= groundY) {
+        y = groundY;
+        velocityY = 0;
+        jumpCount = 0;
+        if (action === "jump") action = "idle";
+      }
+
+      player.style.left = x + "px";
+      player.style.bottom = y + "px";
+
+      // אנימציה
+      frameCounter++;
+      if (frameCounter % 10 === 0) {
+        frame++;
+      }
+
+      const pos = getFramePosition(action, frame);
+      player.style.backgroundPosition = `${pos.x}px ${pos.y}px`;
+
+      requestAnimationFrame(gameLoop);
+    }
+
+    gameLoop();
+  </script>
+</body>
+</html>
